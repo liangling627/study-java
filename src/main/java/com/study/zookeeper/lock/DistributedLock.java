@@ -1,5 +1,8 @@
 package com.study.zookeeper.lock;
 
+import org.apache.zookeeper.*;
+import org.apache.zookeeper.data.Stat;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,14 +11,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
-
-import org.apache.zookeeper.CreateMode;
-import org.apache.zookeeper.KeeperException;
-import org.apache.zookeeper.WatchedEvent;
-import org.apache.zookeeper.Watcher;
-import org.apache.zookeeper.ZooDefs;
-import org.apache.zookeeper.ZooKeeper;
-import org.apache.zookeeper.data.Stat;
 
 /**
  * 分布式锁
@@ -56,13 +51,11 @@ public class DistributedLock implements Lock, Watcher {
 				zk.create(root, new byte[0], ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
 			}
 		} catch (KeeperException | InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
 	private ZooKeeper initZK() {
-		// TODO Auto-generated method stub
 		try {
 			if (zk == null) {
 				zk = new ZooKeeper("192.168.192.111:2181", sessionTimeout, this);
@@ -83,7 +76,6 @@ public class DistributedLock implements Lock, Watcher {
 	 */
 	@Override
 	public void process(WatchedEvent event) {
-		// TODO Auto-generated method stub
 		if (this.latch != null) {
 			this.latch.countDown();
 		}
@@ -91,7 +83,6 @@ public class DistributedLock implements Lock, Watcher {
 
 	@Override
 	public void lock() {
-		// TODO Auto-generated method stub
 		try {
 			if (this.tryLock()) {
 			    return ;
@@ -100,7 +91,6 @@ public class DistributedLock implements Lock, Watcher {
 				waitForLock(waitNode, sessionTimeout);
 			}
 		} catch (KeeperException | InterruptedException e) {
-			// TODO Auto-generated catch block
 			throw new LockException(e);
 		}
 	}
@@ -108,13 +98,11 @@ public class DistributedLock implements Lock, Watcher {
 
 	@Override
 	public void lockInterruptibly() throws InterruptedException {
-		// TODO Auto-generated method stub
 		this.lock();
 	}
 
 	@Override
 	public boolean tryLock() {
-		// TODO Auto-generated method stub
 		try {
 			String splitStr = "_lock_";
 			if (lockName.contains(splitStr)) {
@@ -149,7 +137,6 @@ public class DistributedLock implements Lock, Watcher {
 	@SuppressWarnings("finally")
 	@Override
 	public boolean tryLock(long time, TimeUnit unit) throws InterruptedException {
-		// TODO Auto-generated method stub
 		try {
 			if (this.tryLock()) {
 				return true;
@@ -175,12 +162,10 @@ public class DistributedLock implements Lock, Watcher {
 
 	@Override
 	public void unlock() {
-		// TODO Auto-generated method stub
 		try {
 			zk.delete(myZnode, -1);
 			myZnode = null;
 		} catch (InterruptedException | KeeperException e) {
-			// TODO Auto-generated catch block
 			throw new LockException(e);
 		}
 	}
@@ -188,7 +173,6 @@ public class DistributedLock implements Lock, Watcher {
 
 	@Override
 	public Condition newCondition() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

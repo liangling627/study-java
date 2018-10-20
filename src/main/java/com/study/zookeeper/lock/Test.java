@@ -7,14 +7,12 @@ public class Test {
 	static volatile AtomicInteger count = new AtomicInteger(0);
 	
 	public static void main(String[] args) throws InterruptedException {
-		// TODO Auto-generated method stub
-		
+
 		for (int i = 0; i < 5; i++) {
 			new Thread(new Runnable() {
 				
 				@Override
 				public void run() {
-					// TODO Auto-generated method stub
 					DistributedLock lock = DistributedLock.instanceLock("mylock");
 						try {
 							lock.lock();

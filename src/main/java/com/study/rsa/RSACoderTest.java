@@ -9,7 +9,7 @@ import java.util.Map;
 public class RSACoderTest {
     private String publicKey;
     private String privateKey;
-    /*
+    /**
      * 非对称加密算法   RSA过程 ： 以甲乙双方为例
      *      1、初始化密钥 构建密钥对,生成公钥、私钥保存到keymap中
      *              KeyPairGenerator --->    KeyPair     -->      RSAPublicKey、RSAPrivateKey

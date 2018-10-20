@@ -9,7 +9,6 @@ public class CuratorClientTest {
     private static final String ZK_PATH = "/zktest";
 
 	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
 		CuratorFramework client = CuratorFrameworkFactory.newClient(ZK_ADDRESS, new RetryNTimes(10, 5000));
 		client.start();
 		System.out.println("zk client start successfully");

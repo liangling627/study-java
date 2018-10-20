@@ -1,16 +1,13 @@
 package com.study.redis;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
-//import org.junit.Test;
-
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisCluster;
+
+import java.util.HashSet;
+import java.util.Set;
+
+//import org.junit.Test;
 
 public class RedisClusterClient {
 	
@@ -47,7 +44,6 @@ public class RedisClusterClient {
 			
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

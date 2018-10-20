@@ -1,17 +1,13 @@
 package com.study.curator;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
-import org.apache.curator.framework.recipes.cache.NodeCache;
-import org.apache.curator.framework.recipes.cache.NodeCacheListener;
-import org.apache.curator.framework.recipes.cache.PathChildrenCache;
-import org.apache.curator.framework.recipes.cache.PathChildrenCacheEvent;
-import org.apache.curator.framework.recipes.cache.PathChildrenCacheListener;
+import org.apache.curator.framework.recipes.cache.*;
 import org.apache.curator.framework.recipes.cache.PathChildrenCache.StartMode;
 import org.apache.curator.retry.ExponentialBackoffRetry;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class CarutorDemo {
 	
@@ -19,7 +15,6 @@ public class CarutorDemo {
 	private static final String path = "/zk/test/07";
 
 	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
 		CuratorFramework client = CuratorFrameworkFactory.builder()
 				.connectString("192.168.192.111:2181")
 				.sessionTimeoutMs(5000)
@@ -43,7 +38,6 @@ public class CarutorDemo {
 			
 			@Override
 			public void nodeChanged() throws Exception {
-				// TODO Auto-generated method stub
 				System.out.println("node is changed , new data " + new String(nodeCache.getCurrentData().getData()));
 			}
 		}, pool);

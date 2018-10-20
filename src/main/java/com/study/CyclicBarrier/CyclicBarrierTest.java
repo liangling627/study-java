@@ -31,9 +31,7 @@ public class CyclicBarrierTest {
                 public void run() {
                     try {
                         test.goHome();
-                    } catch (BrokenBarrierException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
