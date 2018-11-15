@@ -21,6 +21,8 @@ public class Test {
 		for (int i = 0; i < 100; i++) {
 			System.out.println(ThreadLocalRandom.current().nextInt(10));
 			System.out.println("第一次提交");
+			System.out.println("第2次提交");
+
 
 		}
 
