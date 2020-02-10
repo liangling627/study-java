@@ -1,34 +1,73 @@
 package com.study;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 public class Test {
+	static final Object object = new Object();
 
 	public static void main(String[] args) {
-//		long[] arrayLong = new long[20000];
-//		// 使用随机数赋值
-//		Arrays.parallelSetAll(arrayLong, index -> ThreadLocalRandom.current().nextInt(100000));
-//		// 查询前10个
-//		Arrays.stream(arrayLong).limit(10).forEach(
-//				i -> System.out.println(i+"")
-//		);
-//		// 对数组排序
-//		Arrays.parallelSort(arrayLong);
-//		// 取出排序后的前10个数
-//		Arrays.stream(arrayLong).limit(10).forEach(
-//				i -> System.out.println(i + "")
-//		);
-		for (int i = 0; i < 100; i++) {
-			System.out.println(ThreadLocalRandom.current().nextInt(10));
-			System.out.println("第一次提交");
-			System.out.println("第2次提交");
+
+		PrintLetter printLetter = new PrintLetter();
+		Thread thread1 = new Thread(printLetter);
+		thread1.start();
+		PrintNum printNum = new PrintNum();
+		Thread thread2 = new Thread(printNum);
+		thread2.start();
 
 
-		}
+
+
 
 
 
 	}
 
+	static class PrintNum implements Runnable {
+		int[] a = {1, 2, 3, 4, 5};
+		@Override
+		public void run() {
+			for (int i = 0; i <= a.length; i++) {
+				try {
+					synchronized (object) {
+						System.out.println(a[i]);
+						object.notify();
+
+						object.wait();
+					}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
+			}
+
+
+		}
+	}
+
+	static class PrintLetter implements Runnable {
+		String[] a = {"A", "B", "C", "D", "E"};
+		@Override
+		public void run() {
+			for (int i = 0; i < a.length; i++) {
+				try {
+					synchronized (object) {
+						System.out.println(a[i]);
+						object.notify();
+						object.wait();
+					}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+
+			}
+
+
+		}
+	}
+
 
 }
+
+
+
+
+
+
